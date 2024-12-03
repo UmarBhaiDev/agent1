@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    
+  <style>
+    /* General Layout */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .map-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 100%;
+      background: #33DB4A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+      z-index: 1000;
+    }
+
+    .sidebar img {
+      width: 50px;
+      height: 30px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .sidebar li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
+      cursor: pointer;
+    }
+
+    .sidebar i {
+      color: #fff;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .sidebar i:hover {
+      color: #f0d124;
+    }
+
+    .sidebar .separator {
+      width: 80%;
+      height: 1px;
+      background: #555;
+      margin: 20px 0;
+    }
+
+    .sidebar .logout {
+      margin-top: auto;
+      margin-bottom: 20px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .top-bar input {
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      width: 300px;
+    }
+    .top-bar input:hover{
+      border: 1px solid #f0d124;
+    }
+
+    .top-bar button {
+      background: #33DB4A;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .top-bar button:hover {
+      background: #33DB4A;
+      color: #000;
+    }
+
+    /* Map Buttons */
+    .map-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+    .rightbar-button{
+      position: absolute;
+      top: 180px;
+      
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+
+
+    }
+    .rightbar-icons{
+      position: absolute;
+      top: 300px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+      
+    }
+    .rightbar-icons i{
+      font-size: 25px;
+      color: #007a10;
+      cursor: pointer;
+    }
+    .rightbar-icons i:hover{
+      color: #000000;
+    }
+    .rightbar-button button{
+      background: #33DB4A;
+      color: #fff;
+      border: none;
+      padding: 8px 13px;
+      border-radius: 25px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+
+
+    }
+    .rightbar-button button:hover {
+      background: #33DB4A;
+      color: #000;
+    }
+    .live-button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: #33DB4A;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.live-button:hover {
+  background: #28a745;
+}
+
+
+    .map-buttons button {
+      background: #33DB4A;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .map-buttons button i {
+      font-size: 16px;
+    }
+
+    .map-buttons button:hover {
+      background: #33DB4A;
+      color: #000;
+    }
+
+    /* Map View Switch */
+    .view-switch {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .view-switch button {
+      background: #33DB4A;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .__analytic{
+      margin-left: 21px;
+      margin-bottom: 10px;
+    }
+
+    .view-switch button:hover {
+      background: #33DB4A;
+      color: #000;
+    }
+    /* Filter Window Styling */
+    
+.__marketreseach{
+  background-color: #33DB4A;
+  color: white;
+}
+.__marketreseach:hover{
+  background-color: #33DB4A;
+      color: #000;
+}
+.text-color {
+            color: white;
+            background-color: #33DB4A;
+            border: 0;
+            border-radius: 30px;
+            margin-bottom: 10px;
+        }
+
+        .text-color:hover {
+            background-color: #33DB4A;
+            color: black;
+
+        }
+        .right-sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    background: #fff;
+    border-left: 1px solid #ddd;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .property-listing-section {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .property-listing-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .create-alert-btn {
+    background-color: #33DB4A;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+  }
+
+  .create-alert-btn:hover {
+    background-color: #33DB4A;
+  color: #33DB4A;
+  }
+  .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #f0d124;
+}
+/* Flex container for the dropdowns */
+/* Flex container for the dropdowns */
+.dropdown-container {
+  display: flex;
+  justify-content: space-between; /* Distribute items evenly */
+  gap: 10px; /* Add space between the dropdowns */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  width: 100%; 
+  box-sizing: border-box; 
+}
+
+
+.dropdown {
+  flex: 1; 
+  min-width: 80px; 
+  max-width: 200px; 
+  box-sizing: border-box; 
+}
+
+/* Label styling */
+.dropdown label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+
+.dropdown select {
+  width: 100%; 
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box; 
+}
+
+
+.filter-section {
+  margin-top:20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-btn {
+  background-color: #33DB4A;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-btn i {
+  font-size: 18px;
+}
+
+.filter-btn:hover {
+  background-color: #33DB4A;
+  color: #000;
+}
+/* Styling the Filters Container */
+#Myfilters {
+  display: none; /* Hidden initially */
+  z-index: 1000; /* Ensure it's above other elements */
+  background-color: #33DB4A;
+  color: #ffffff;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px; /* Restrict maximum width */
+  width: 90%; /* Adjust width for responsiveness */
+  height: 80vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+/* Flexbox for Two Columns */
+#Myfilters .filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between dropdowns */
+}
+
+/* Individual Filters */
+#Myfilters label {
+  display: block; /* Ensure label is on top */
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+#Myfilters input {
+     /* Ensure label is on top */
+  font-size: 19px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+#Myfilters select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Adjust Width for Two Columns */
+#Myfilters .filter-row > div {
+  width: 48%; /* Two dropdowns per row */
+}
+
+/* Submit / Reset Button */
+#Myfilters button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: #33DB4A;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 50%;
+}
+
+#Myfilters button:hover {
+  background-color: #33DB4A;
+  color: #000;
+  border: 1px solid #000;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  #Myfilters .filter-row > div {
+    width: 100%; /* Stack dropdowns vertically on smaller screens */
+  }
+
+  #Myfilters button {
+    width: 100%;
+  }
+}
+.topbardd {
+    display: flex;
+    align-items: center; /* Align items in the same line */
+    gap: 10px; /* Space between dropdowns */
+    flex: 3; /* Adjust space allocation */
+}
+
+.topbardd label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px; /* Space between label and dropdown */
+    white-space: nowrap; /* Prevent label from wrapping */
+}
+
+.topbardd select {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #33DB4A; /* Black background */
+    color: #fff; /* White text */
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    appearance: none; /* Hides default browser styles */
+    cursor: pointer;
+    flex: 1; /* Make both dropdowns evenly spaced */
+}
+
+.topbardd select option {
+  background-color: #33DB4A;
+    color: #000000; /* White text for options */
+
+}
+
+/* Focus and Hover States */
+.topbardd select:hover {
+  background-color: #33DB4A;
+  color: #000;
+  border: 1px solid #000;
+}
+/* Container Styling */
+/* Center the container with improved styling */
+.agent-management {
+  display: none;
+  width: 92%;
+   /* Limit the width for better readability */
+  height: 100%; /* Adjust height to fit content */
+  margin: 0 auto;
+  background: #ffffff; /* White background */
+  padding: 30px 40px; /* Spacious padding */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  position: absolute;
+  top: 50%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #33db4a; /* Green border */
+  border-radius: 12px; /* More rounded corners */
+  z-index: 2000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Heading Styling */
+.agent-management h3 {
+  font-size: 35px; /* Larger font size */
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 20px;
+  text-align: center; /* Center align heading */
+}
+
+.agent-management h4 {
+  font-size: 28px; /* Slightly smaller than main heading */
+  font-weight: 600;
+  color: #555555;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+/* Form Styling */
+#agentForm {
+  margin-bottom: 30px;
+}
+
+#agentForm .form-label {
+  font-weight: 800;
+  margin-right: 40px;
+  
+  font-size: 25px; /* Slightly larger font size */
+  color: #555555;
+  justify-content: center;
+}
+
+#agentForm .form-control {
+  justify-content: center;
+  margin-top: 10px;
+  height: 50px; /* Increase input height */
+  font-size: 23px; /* Larger input text */
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#agentForm .form-control:focus {
+  border-color: #33db4a; /* Green border on focus */
+  box-shadow: 0 0 8px rgba(51, 219, 74, 0.4); /* Subtle shadow on focus */
+}
+
+/* Button Styling */
+.agent-management .btn-success {
+  background-color: #33db4a; /* Custom green color */
+  border: none;
+  padding: 15px;
+  font-size: 18px; /* Larger button text */
+  font-weight: bold;
+  border-radius: 8px; /* More rounded corners */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.agent-management .btn-success:hover {
+  background-color: #28a745; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.agent-management .btn-success:active {
+  background-color: #1e7e34; /* Even darker green on click */
+}
+
+/* Agent List Styling */
+.agent-list {
+  max-height: 300px; /* Limit height */
+  overflow-y: auto;
+  padding: 15px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  background-color: #33db4a;
+  margin-top: 20px; /* Add spacing above the list */
+}
+
+/* Scrollbar Styling */
+.agent-list::-webkit-scrollbar {
+  width: 8px;
+}
+.live-button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: #33DB4A;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.live-button:hover {
+  background: #28a745;
+}
+
+
+.agent-list::-webkit-scrollbar-thumb {
+  background-color: #33db4a;
+  border-radius: 4px;
+}
+
+.agent-list::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+}
+
+/* Agent Item Styling */
+.agent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Deeper shadow for items */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.agent-item:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-1px);
+}
+
+.agent-item span {
+  font-size: 18px; /* Larger font size */
+  color: #333333;
+}
+
+/* Button Styling within Agent Items */
+.agent-item .btn {
+  padding: 8px 16px;
+  font-size: 16px; /* Larger button text */
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.agent-item .btn-success {
+  background-color: #0069d9; /* Blue background */
+}
+
+.agent-item .btn-danger {
+  background-color: #dc3545; /* Red background */
+}
+
+.agent-item .btn-success:hover {
+  background-color: #0053ba;
+}
+
+.agent-item .btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Responsive styling */
+
+  </style>
+</head>
+<body>
+  <div class="map-container">
+    <div id="map"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="index.html"><img src="logo-removebg-preview.png" alt="Logo"></a>
+      <ul>
+        <li><a href="https://hharc.github.io/GeoEstate-1/pages/userpanel/profile.html"><i class="fa-solid fa-user" title="User"></i></a></li>
+        <li ><i class="fas fa-search" title="Search"></i></li>
+        <li > <a href="agentpage01.html"><i class="fas fa-user-shield"></i> </a></li>
+
+        <li> <a href="https://umarbhaidev.github.io/Adminstrator2/profileooo.html"> <i class="fas fa-plus"></i></a></li>
+         <li> <a href="agentpage1.html"><i class="fas fa-paper-plane"></i></a></li>
+        <li> <a href="agentpage4.html"><i class="fas fa-key"></i></a></li>
+        <li> <a href="agentpage5.html"><i class="fa-solid fa-bell"></i></a></li>
+        
+
+        
+
+      </ul>
+      <div class="separator"></div>
+            <li><a href="../signin.html"><i class="fa-solid fa-right-from-bracket" title="Log out"></i></a></li>
+    </div>
+
+
+    <!-- Top Bar -->
+    <div class="top">
+    <div class="top-bar">
+      <input type="text" placeholder="Search location...">
+      <button><i class="fas fa-search"></i></button>
+      <button class="Myfilterbutton"><i class=" fas fa-filter"></i> Filter</button>
+      <button class="Myfilterbutton"></i> Reset</button>
+      <div class="topbardd">
+      
+      <select id="profile" class="dropdown">
+          <option value="">Agent</option>
+          
+      </select>
+    
+      <!-- Color Dropdown -->
+       
+       
+      
+      <select id="color" class="dropdown">
+          <option value="">Color ↓</option>
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+          <option value="yellow">Yellow</option>
+      </select>
+      
+    </div>
+
+      
+    </div>
+    <div id="Myfilters">
+      <h3>Filter Properties</h3>
+    
+      <h4>Main Filters</h4>
+      <div class="filter-row">
+        <div>
+          <label for="version">Select Version</label>
+          <select id="version" name="version">
+            <option value="1">Version 1</option>
+            <option value="2">Version 2</option>
+          </select>
+        </div>
+        <div>
+          <label for="sortby">Sort By</label>
+          <select id="sortby" name="sortby">
+            <option value="time-desc">Time on Market (most to least)</option>
+            <option value="time-asc">Time on Market (least to most)</option>
+            <option value="price-asc">Price Ascending</option>
+            <option value="price-desc">Price Descending</option>
+            <option value="price-per-m2-asc">Price per m² Ascending</option>
+            <option value="price-per-m2-desc">Price per m² Descending</option>
+          </select>
+        </div>
+      </div>
+    
+      <h4>Location</h4>
+      <div class="filter-row">
+        <div>
+          <label for="country">Country</label>
+          <select id="country" name="country">
+            <option value="usa">Spain</option>
+            <option value="uk">UK</option>
+            <option value="germany">Germany</option>
+          </select>
+        </div>
+        <div>
+          <label for="community">Community</label>
+          <select id="community" name="community">
+            <option value="suburb">Suburb</option>
+            <option value="city">City</option>
+          </select>
+        </div>
+        <div>
+          <label for="municipality">Municipality</label>
+          <input id="municipality" name="municipality" type="text" placeholder="Enter Municipality">
+        </div>
+      </div>
+    
+      <h4>Price</h4>
+      <div class="filter-row">
+        <div>
+          <label for="min-price">Min Price</label>
+          <select id="min-price" name="min-price">
+            <option value="0">0</option>
+            <option value="100000">100,000</option>
+            <option value="200000">200,000</option>
+          </select>
+        </div>
+        <div>
+          <label for="max-price">Max Price</label>
+          <select id="max-price" name="max-price">
+            <option value="1000000">1,000,000</option>
+            <option value="2000000">2,000,000</option>
+          </select>
+        </div>
+      </div>
+    
+      <h4>Surface Area</h4>
+      <div class="filter-row">
+        <div>
+          <label for="built-min">Built Area (m²) Min</label>
+          <input id="built-min" name="built-min" type="number" placeholder="Min">
+        </div>
+        <div>
+          <label for="built-max">Built Area (m²) Max</label>
+          <input id="built-max" name="built-max" type="number" placeholder="Max">
+        </div>
+        <div>
+          <label for="plot-min">Plot Area (m²) Min</label>
+          <input id="plot-min" name="plot-min" type="number" placeholder="Min">
+        </div>
+        <div>
+          <label for="plot-max">Plot Area (m²) Max</label>
+          <input id="plot-max" name="plot-max" type="number" placeholder="Max">
+        </div>
+      </div>
+    
+      <h4>Property Type</h4>
+      <div class="filter-row">
+        <div>
+          <label for="residential">Residential</label>
+          <select id="residential" name="residential">
+            <option value="apartment">Apartment/Flat</option>
+            <option value="house">House/Chalet</option>
+            <option value="penthouse">Penthouse</option>
+            <option value="studio">Studio</option>
+            <option value="villa">Villa</option>
+            <option value="rustic-estate">Rustic Estate</option>
+          </select>
+        </div>
+        <div>
+          <label for="commercial">Commercial</label>
+          <select id="commercial" name="commercial">
+            <option value="solar">Solar Project</option>
+            <option value="warehouse">Industrial Surfaces/Warehouses</option>
+            <option value="hotel">Hotels</option>
+            <option value="office">Office</option>
+          </select>
+        </div>
+      </div>
+    
+      <!-- Continue adding the rest of the filters from the document in a similar manner -->
+    
+      <button type="reset">Reset Filters</button>
+    </div>
+<div class="config-page">
+  <h3 class="text-center mb-4">System Configuration</h3>
+
+  <!-- Change Plans and Configure the System -->
+  <section class="mb-4">
+    <h5>Change Plans and Configure the System</h5>
+    <div class="mb-3">
+      <label for="planType" class="form-label">Select Plan</label>
+      <select id="planType" class="form-select">
+        <option>Basic</option>
+        <option>Premium</option>
+        <option>Enterprise</option>
+      </select>
+    </div>
+    <button class="btn btn-success w-100" id="updatePlanBtn">Update Plan</button>
+  </section>
+
+  <!-- Input Company Data and Set Up Exposes -->
+  <section class="mb-4">
+    <h5>Input Company Data</h5>
+    <div class="mb-3">
+      <label for="companyName" class="form-label">Company Name</label>
+      <input type="text" id="companyName" class="form-control" placeholder="Enter company name">
+    </div>
+    <div class="mb-3">
+      <label for="exposeDetails" class="form-label">Expose Details</label>
+      <textarea id="exposeDetails" class="form-control" rows="3" placeholder="Enter expose details"></textarea>
+    </div>
+    <button class="btn btn-success w-100" id="submitCompanyBtn">Submit Company Data</button>
+  </section>
+
+  <!-- Grant Agents Access to Notifications by Region -->
+  <section class="mb-4">
+    <h5>Grant Agents Access</h5>
+    <div class="mb-3">
+      <label for="region" class="form-label">Select Region</label>
+      <select id="region" class="form-select">
+        <option>North</option>
+        <option>South</option>
+        <option>East</option>
+        <option>West</option>
+      </select>
+    </div>
+    <button class="btn btn-success w-100" id="grantAccessBtn">Grant Access</button>
+  </section>
+
+  <!-- Mark Properties on Map -->
+  <section>
+    <h5>Mark Properties on Map</h5>
+    <div id="map"></div>
+    <div class="mt-3">
+      <label for="propertyColor" class="form-label">Property Color</label>
+      <input type="color" id="propertyColor" class="form-control form-control-color">
+    </div>
+    <div class="mb-3">
+      <label for="propertyCoordinates" class="form-label">Coordinates (Latitude, Longitude)</label>
+      <input type="text" id="propertyCoordinates" class="form-control" placeholder="e.g., 40.4168,-3.7038">
+    </div>
+    <button class="btn btn-success w-100" id="markPropertyBtn">Mark Property</button>
+  </section>
+</div>
+
+    
+    
+    
+    
+    <!-- Map Buttons -->
+    <div class="map-buttons">
+      <button><i class="fas fa-eraser"></i> Clear Zone</button>
+      <button id="draw-ghrap"><i class="fas fa-pencil-alt"></i> Draw Zone</button>
+    </div>
+    <div class="rightbar-button">
+      <button> <i class="fas fa-chart-area"></i>Municipious</button>
+      <button><i style="margin-left: 17px;" class="fas fa-building"></i>Plots</button>
+    </div>
+    <div class="rightbar-icons">
+      <i class="fas fa-graduation-cap"></i>
+      <i class="fas fa-dumbbell"></i>
+      <i class="fas fa-shopping-bag"></i>
+      <i class="fas fa-running"></i>
+
+    </div>
+    
+    
+    
+
+    <!-- Map View Switch -->
+    
+    <div class="view-switch">
+      <button id="roadmap-view">Road Map</button>
+      <button id="satellite-view">Satellite View</button>
+      <div class="button-container">
+        <button style="font-size: 20px;" class="icon-button plus">+</button>
+        <button class="icon-button minus" style="font-size: 20px;">-</button>
+    </div>
+    </div>
+    <li class="live-button"><i class="fa fa-location-dot"></i></li>
+
+    
+
+    
+    
+  </div>
+        <div class="filter-section">
+          <div class="dropdown" style="margin-left: 20px;">
+            <select id="sale" name="sale">
+              <option value="sale">Sort By</option>
+              <option value="price-high-low">Price: High to Low</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
+        </div>
+       
+    </div>
+</div>
+
+
+<script src="../../assests/js/map.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+
+
+<script>
+  // Initialize map only once
+  const map = L.map('map').setView([40.463667, -3.74922], 6);
+
+  // Add tile layers
+  const roadLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+  const satelliteLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
+  roadLayer.addTo(map); // Default layer
+
+  // Switch between Roadmap and Satellite view
+  document.getElementById('roadmap-view').addEventListener('click', () => {
+    map.removeLayer(satelliteLayer);
+    map.addLayer(roadLayer);
+  });
+
+  document.getElementById('satellite-view').addEventListener('click', () => {
+    map.removeLayer(roadLayer);
+    map.addLayer(satelliteLayer);
+  });
+
+  // Toggle display of the favorites section
+  document.addEventListener("DOMContentLoaded", function () {
+    const filterButton = document.querySelector(".Myfilterbutton");
+    const filterSection = document.querySelector("#Myfilters");
+
+    if (filterSection) {
+      filterSection.style.display = "none";
+    }
+
+    // Check if both elements exist
+    if (filterButton && filterSection) {
+      filterButton.addEventListener("click", function () {
+        // Toggle display
+        if (filterSection.style.display === "none" || !filterSection.style.display) {
+          filterSection.style.display = "block"; // Show the filter section
+          filterSection.style.zIndex = "1000"; // Ensure it is above other elements
+        } else {
+          filterSection.style.display = "none"; // Hide the filter section
+          filterSection.style.zIndex = "-1"; // Reset z-index
+        }
+      });
+    } else {
+      console.error("Filter button or filter section not found in the DOM.");
+    }
+  });
+
+  // Initialize drawing functionality once the DOM is fully loaded
+ 
+
+
+
+</script>
+
+</body>
+</html>

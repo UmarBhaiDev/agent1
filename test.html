@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Split Animation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .animation-wrapper {
+      width: 1000px; 
+      height: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .full-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: no-repeat center center/cover;
+      transition: opacity 0.5s ease;
+    }
+
+    .line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 6px;
+      background: #fff;
+      transition: width 2s ease;
+    }
+
+    .text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 2.5rem;
+      font-family: Arial, sans-serif;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .split {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .split .top,
+    .split .bottom {
+      width: 100%;
+      height: 50%;
+      
+      background: no-repeat center center/cover;
+      transition: transform 1s ease;
+    }
+
+    .split .top {
+      transform: translateY(0);
+    }
+
+    .split .bottom {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="animation-wrapper">
+    <div class="full-image"></div>
+    <div class="text"></div>
+    <div class="line"></div>
+    <div class="split">
+      <div class="top"></div>
+      <div class="bottom"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const line = document.querySelector('.line');
+      const text = document.querySelector('.text');
+      const split = document.querySelector('.split');
+      const topSplit = split.querySelector('.top');
+      const bottomSplit = split.querySelector('.bottom');
+      const fullImage = document.querySelector('.full-image');
+
+      const images = [
+        'backgroun1.jpg', // First image
+        'backgroun2.jpg', // Second image
+        'backgroun1.jpg' // Third image
+      ];
+
+      const texts = [
+        'We help to transform your bussiness in digital ear', // Text for first image
+        'Maxsonify',     // Text for second image
+        'Your Success, Our Mission!' // Text for third image
+      ];
+
+      let repeatCount = 0;
+      const maxRepeats = 3; // Number of times to repeat the effect
+
+      function resetAnimations() {
+        line.style.width = '0';
+        text.style.opacity = '0';
+        split.style.opacity = '0';
+        topSplit.style.transform = 'translateY(0)';
+        bottomSplit.style.transform = 'translateY(0)';
+      }
+
+      function changeImage() {
+        if (repeatCount < maxRepeats) {
+          const currentImage = images[repeatCount % images.length];
+          const currentText = texts[repeatCount % texts.length];
+          fullImage.style.backgroundImage = `url(${currentImage})`;
+          topSplit.style.backgroundImage = `url(${currentImage})`;
+          bottomSplit.style.backgroundImage = `url(${currentImage})`;
+          text.textContent = currentText;
+
+          resetAnimations();
+
+          // // Start animations
+          setTimeout(() => {
+            line.style.width = '100%'; // Line animation
+            text.style.opacity = '1'; // Text appears
+            split.style.opacity = '1'; // Split effect appears
+            topSplit.style.transform = 'translateY(-100%)'; // Move top up
+            bottomSplit.style.transform = 'translateY(100%)'; // Move bottom down
+          }, 100); 
+
+          repeatCount++;
+          setTimeout(() => {
+            resetAnimations(); // Reset before the next image
+            setTimeout(() => {
+              line.style.width = '0'; // Reset line width for the next animation
+              setTimeout(() => {
+                changeImage(); }, 100); // Delay before starting the next image change
+            }, 1000); // Duration for the line to reset
+          }, 4000); // Duration for the entire effect
+        } else {
+          repeatCount = 0; // Reset count to loop through images
+          setTimeout(changeImage, 8000); // Change image every 6 seconds
+        }
+      }
+
+      changeImage(); // Start the image change process
+    });
+  </script>
+</body>
+</html>

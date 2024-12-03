@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive - Our Curated Listings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      /* White background */
+      color: white;
+      /* White text for all elements */
+    }
+
+    .main-container {
+      width: 90%;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+
+    }
+
+    .header-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: black;
+      /* Black color for the header */
+    }
+
+    .add-listing-btn-header {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      background-color: #33DB4A;
+      /* Light Green button */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .add-listing-btn-header:hover {
+      background-color: #66cc00;
+    }
+
+    .listing-card {
+      display: flex;
+      gap: 20px;
+      background: #32cd32;
+      /* Green background for the cards */
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .listing-card img {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .card-details {
+      flex: 1;
+    }
+
+    .card-category {
+      font-size: 12px;
+      font-weight: bold;
+      color: #ffcc00;
+      /* Yellow color for category */
+    }
+
+    .card-date {
+      font-size: 12px;
+      color: #f0e68c;
+      /* Light yellow for date */
+      margin-left: 10px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: #f8f8f8;
+      /* Slight off-white color for description */
+      margin: 10px 0;
+    }
+
+    .card-price {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+      color: white;
+      /* White price text */
+    }
+
+    .add-to-list-btn {
+      padding: 8px 16px;
+      background-color: #2fa53f;
+      /* Blue button */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .add-to-list-btn:hover {
+      background-color: #118320;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 127vh;
+      background: #33DB4A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+      z-index: 1000;
+    }
+
+    .sidebar img {
+      width: 50px;
+      height: 30px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .sidebar li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
+      cursor: pointer;
+    }
+
+    .sidebar i {
+      color: #fff;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .sidebar i:hover {
+      color: #f0d124;
+    }
+
+    .sidebar .separator {
+      width: 80%;
+      height: 1px;
+      background: #555;
+      margin: 20px 0;
+    }
+
+    .sidebar .logout {
+      margin-top: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <a href="index.html"><img src="logo-removebg-preview.png" alt="Logo"></a>
+    <ul>
+      <li title="Profile"><a href="profileooo.html"><i class="fa-solid fa-circle-user"></i></a></li>
+      <li title="Search"><a href="index.html"><i class="fas fa-search" title="Search"></i></a></li>
+      <li title="listing"><a href="listinggggg.html"><i class="fa-solid fa-list"></i> </a></li>
+      <li title="Exposes"><a href="agentpage1.html"><i class="fa-solid fa-file-shield"></i></a></li>
+      <li title="Construction"><a href="construction.html"><i class="fa-regular fa-building"></i></a></li>
+      <li title="Marks"><a href="marks.html"><i class="fa-solid fa-bookmark"></i></a></li>
+      <li title="Team"><a href="users.html"><i class="fa-solid fa-house-laptop"></i></a></li>
+      <li title="History"><a href="history.html"><i class="fas fa-history"></i></a></li>
+    </ul>
+    <div class="separator"></div>
+    <li><a href="../signin.html"><i class="fa-solid fa-right-from-bracket" title="Log out"></i></a></li>
+  </div>
+  <div class="main-container">
+    <!-- Add Listing Button at Top Right -->
+    <button class="add-listing-btn-header">Add Listing</button>
+
+    <h1 class="header-title">Our Current Listings</h1>
+
+    <div class="listing-card">
+      <img src="images (1).jpg" alt="Article Image">
+      <div class="card-details">
+        <span class="card-category">Press Release</span>
+        <span class="card-date">August 12, 2023</span>
+        <h3 class="card-title">Market watch: Are condos still a good investment?</h3>
+        <p class="card-description">Debitis ipsa quam necessitatibus consequuntur unde est qui voluptatum...</p>
+        <span class="card-price">$1,200</span>
+        <button class="add-to-list-btn">Click Here</button>
+      </div>
+    </div>
+
+    <div class="listing-card">
+      <img src="images (2).jpg" alt="Article Image">
+      <div class="card-details">
+        <span class="card-category">Announcement</span>
+        <span class="card-date">August 14, 2023</span>
+        <h3 class="card-title">The history of great design</h3>
+        <p class="card-description">Tempora similique labore quod nihil suscipit vel consequuntur...</p>
+        <span class="card-price">$800</span>
+        <button class="add-to-list-btn">Click Here</button>
+      </div>
+    </div>
+
+    <div class="listing-card">
+      <img src="images (3).jpg" alt="Article Image">
+      <div class="card-details">
+        <span class="card-category">Blog</span>
+        <span class="card-date">September 1, 2023</span>
+        <h3 class="card-title">How technology shapes modern living</h3>
+        <p class="card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+        <span class="card-price">$600</span>
+        <button class="add-to-list-btn">Click Here</button>
+      </div>
+    </div>
+
+    <div class="listing-card">
+      <img src="images.jpg" alt="Article Image">
+      <div class="card-details">
+        <span class="card-category">Blog</span>
+        <span class="card-date">September 1, 2023</span>
+        <h3 class="card-title">How technology shapes modern living</h3>
+        <p class="card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+        <span class="card-price">$600</span>
+        <button class="add-to-list-btn">Click Here</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

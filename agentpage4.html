@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buyer Manager</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .manager-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #33DB4A;
+      color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .responsibility-item {
+      background-color: #2cae3c;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .btn-green {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+    }
+
+    .btn-green:hover {
+      background-color: #28b840;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 117vh;
+      background: #33DB4A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+      z-index: 1000;
+    }
+
+    .sidebar img {
+      width: 50px;
+      height: 30px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .sidebar li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
+      cursor: pointer;
+    }
+
+    .sidebar i {
+      color: #fff;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .sidebar i:hover {
+      color: #f0d124;
+    }
+
+    .sidebar .separator {
+      width: 80%;
+      height: 1px;
+      background: #555;
+      margin: 20px 0;
+    }
+
+    .sidebar .logout {
+      margin-top: auto;
+      margin-bottom: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="index.html"><img src="logo-removebg-preview.png" alt="Logo"></a>
+    <ul>
+      <li><i class="fas fa-search" title="Search"></i></li>
+      <li><a href="agentpage1.html"><i class="fas fa-paper-plane"></i></a></li>
+      <li><a href="agentpage2.html"><i class="fas fa-history"></i></a></li>
+      <li><a href="agentpage3.html"><i class="fas fa-user-shield"></i></a></li>
+      <li><a href="agentpage4.html"><i class="fas fa-key"></i></a></li>
+      <li><a href="agentpage5.html"><i class="fa-solid fa-bell"></i></a></li>
+    </ul>
+    <div class="separator"></div>
+    <li><a href="../signin.html"><i class="fa-solid fa-right-from-bracket" title="Log out"></i></a></li>
+  </div>
+
+  <div class="manager-container">
+    <h3 class="text-center mb-4">Buyer Manager</h3>
+    <p class="text-center">Manage buyers with limited authority. Perform actions like viewing profiles, assigning tasks, and tracking activities.</p>
+
+    <!-- Responsibilities Section -->
+    <section>
+      <h4>Responsibilities</h4>
+      <div id="responsibilities">
+        <div class="responsibility-item">View and manage buyer profiles.</div>
+        <div class="responsibility-item">Assign notifications and tasks to agents.</div>
+        <div class="responsibility-item">Track property interests and buyer activities.</div>
+      </div>
+      <button class="btn btn-green mt-3 w-100" id="addResponsibilityBtn">Add Responsibility</button>
+    </section>
+
+    <!-- Actions Section -->
+    <section class="mt-4">
+      <h4>Actions</h4>
+      <div>
+        <button class="btn btn-green w-100 mb-3" data-bs-toggle="modal" data-bs-target="#buyersModal">View Buyers</button>
+        <button class="btn btn-green w-100 mb-3" data-bs-toggle="modal" data-bs-target="#tasksModal">Assign Tasks</button>
+        <button class="btn btn-green w-100" data-bs-toggle="modal" data-bs-target="#activitiesModal">Track Activities</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modals -->
+  <!-- Buyers Modal -->
+  <div class="modal fade" id="buyersModal" tabindex="-1" aria-labelledby="buyersModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="buyersModalLabel">Buyer Profiles</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li>Buyer 1: John Doe</li>
+            <li>Buyer 2: Jane Smith</li>
+            <li>Buyer 3: Alex Johnson</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tasks Modal -->
+  <div class="modal fade" id="tasksModal" tabindex="-1" aria-labelledby="tasksModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tasksModalLabel">Assign Tasks</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Assign notifications or tasks to agents:</p>
+          <ul>
+            <li>Task 1: Notify buyer about new properties</li>
+            <li>Task 2: Set up meetings with agents</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activities Modal -->
+  <div class="modal fade" id="activitiesModal" tabindex="-1" aria-labelledby="activitiesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="activitiesModalLabel">Track Activities</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Recent property interests and activities:</p>
+          <ul>
+            <li>Property 1: Interested</li>
+            <li>Property 2: Declined</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const addResponsibilityBtn = document.getElementById('addResponsibilityBtn');
+    const responsibilitiesContainer = document.getElementById('responsibilities');
+
+    addResponsibilityBtn.addEventListener('click', () => {
+      const newResponsibility = prompt("Enter the new responsibility:");
+      if (newResponsibility) {
+        const newDiv = document.createElement('div');
+        newDiv.className = 'responsibility-item';
+        newDiv.textContent = newResponsibility;
+        responsibilitiesContainer.appendChild(newDiv);
+      }
+    });
+  </script>
+</body>
+</html>
